@@ -10,7 +10,11 @@ app.use(express.static(path.join(__dirname, 'dist/welp')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//require('./db');
+const getYelpLocations = require('./api/getYelpLocations');
+
+getYelpLocations(app);
+
+require('./db');
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/welp/index.html'));
