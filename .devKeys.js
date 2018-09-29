@@ -1,0 +1,3 @@
+module.exports = {
+    yelpAccessToken: "Jgv7HhfdR7giFHWmatnocPj7GDux7s_tcog7uhGW3xN-LkIHHGsaLHyXvkJam0HET3RtJ3pKljSDDAkZV9vf74fKh4goXZb4VQ_wCi5EJTOG8U36AHMNpyM6t7WvW3Yx"
+}
