@@ -1,0 +1,111 @@
+{
+    "query": {
+        "metrics": [
+            "lat",
+            "lon",
+            "Azimuth",
+            "Technology",
+            "IsIndoor",
+            "Provider"
+        ],
+        "namespace": {
+            "tz": {
+                "source": [
+                    {
+                        "$input": "z"
+                    }
+                ]
+            },
+            "tx": {
+                "source": [
+                    {
+                        "$input": "x"
+                    }
+                ]
+            },
+            "ty": {
+                "source": [
+                    {
+                        "$input": "y"
+                    }
+                ]
+            },
+            "buffer": {
+                "source": [
+                    {
+                        "default": 0,
+                        "$input": "buffer"
+                    }
+                ]
+            },
+            "px": {
+                "source": [
+                    "lon",
+                    "tz"
+                ],
+                "apply": [
+                    {
+                        "type": "transform",
+                        "fn": "lon_to_x"
+                    }
+                ]
+            },
+            "py": {
+                "source": [
+                    "lat",
+                    "tz"
+                ],
+                "apply": [
+                    {
+                        "type": "transform",
+                        "fn": "lat_to_y"
+                    }
+                ]
+            },
+            "technology_filter": {
+                "source": [
+                    {
+                        "drop_if_not_provided": true,
+                        "$input": "technology_filter"
+                    }
+                ]
+            },
+            "pixels": {
+                "source": [
+                    "px",
+                    "py"
+                ]
+            }
+        },
+        "order": [
+            {
+                "lat": "asc"
+            },
+            {
+                "lon": "asc"
+            },
+            {
+                "Technology": "asc"
+            }
+        ],
+        "filters": [
+            {
+                "pixels": {
+                    "$pixel_within_tile": [
+                        "tx",
+                        "ty",
+                        "buffer"
+                    ]
+                }
+            },
+            {
+                "technology": {
+                    "$in": {
+                        "$reference": "technology_filter"
+                    }
+                }
+            }
+        ]
+    },
+    "description": ""
+}
